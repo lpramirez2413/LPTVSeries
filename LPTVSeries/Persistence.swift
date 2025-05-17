@@ -13,7 +13,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init() {
-        container = NSPersistentContainer(name: "LPTVSeries")
+        container = NSPersistentContainer(name: Containers.mainModel)
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error {
@@ -24,4 +24,8 @@ struct PersistenceController {
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
+}
+
+enum Containers {
+    static let mainModel: String = "LPTVSeries"
 }
