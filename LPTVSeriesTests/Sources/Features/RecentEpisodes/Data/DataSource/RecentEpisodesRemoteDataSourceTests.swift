@@ -21,6 +21,9 @@ final class RecentEpisodesRemoteDataSourceTests: XCTestCase {
     }
 
     override func tearDown() {
+        sut = nil
+        httpClient = nil
+        mockUrlSession = nil
         super.tearDown()
     }
 
@@ -52,7 +55,7 @@ final class RecentEpisodesRemoteDataSourceTests: XCTestCase {
 
         mockUrlSession.mockResponse = (jsonString: jsonString, statusCode: 200)
         
-        let episodes: [EpisodeModel] = try await sut.fetchRecentEpisodesData(by: "US")
+        let episodes: [EpisodeModel] = try await sut.requestRecentEpisodesData(by: "US")
         XCTAssertEqual(episodes.count, 2)
         XCTAssertEqual(episodes.first?.id, 1)
         XCTAssertEqual(episodes.last?.id, 2)
