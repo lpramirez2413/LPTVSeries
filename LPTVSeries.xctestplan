@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "4527F4B6-21DF-48D7-ACD2-3D75F12EE488",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:LPTVSeries.xcodeproj",
+      "identifier" : "25885DBE2DD6CAD100A7D7BC",
+      "name" : "LPTVSeries"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:LPTVSeries.xcodeproj",
+        "identifier" : "25885DD32DD6CAD300A7D7BC",
+        "name" : "LPTVSeriesTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:LPTVSeries.xcodeproj",
+        "identifier" : "25885DDD2DD6CAD300A7D7BC",
+        "name" : "LPTVSeriesUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
