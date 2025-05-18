@@ -6,7 +6,7 @@
     
 import Foundation
 
-struct GetRecentEpisodeUseCase: GetRecentEpisodesUseCaseProtocol {
+struct GetRecentEpisodesUseCase: GetRecentEpisodesUseCaseProtocol {
 
     private let repository: RecentEpisodesRepositoryProtocol
     
