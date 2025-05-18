@@ -6,7 +6,7 @@
 
 import CoreData
 
-struct RecentEpisodesLocalDataSource: RecentEpisodesLocalDataSourceProtocol {
+class RecentEpisodesLocalDataSource: RecentEpisodesLocalDataSourceProtocol {
     
     private let context: NSManagedObjectContext
     

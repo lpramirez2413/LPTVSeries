@@ -15,7 +15,7 @@ final class RecentEpisodesLocalDataSourceTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        context = ContainerStub.makeInMemoryContext(testCase: self)
+        context = TestPersistenceController(testCase: self).viewContext
         sut = RecentEpisodesLocalDataSource(context: context)
     }
 
@@ -26,12 +26,9 @@ final class RecentEpisodesLocalDataSourceTests: XCTestCase {
     }
 
     func test_fetchRecentEpisodesData() async throws {
-        let idsToSave = [101, 102, 103]
-        
-        idsToSave.forEach {
-            let entity = FavoriteEpisodeEntity(context: context)
-            entity.id = Int32($0)
-        }
+        _ = FavoriteEpisodeEntity(id: 101, name: "Episode 1", context: context)
+        _ = FavoriteEpisodeEntity(id: 102, name: "Episode 2", context: context)
+        _ = FavoriteEpisodeEntity(id: 103, name: "Episode 3", context: context)
         
         try context.save()
 

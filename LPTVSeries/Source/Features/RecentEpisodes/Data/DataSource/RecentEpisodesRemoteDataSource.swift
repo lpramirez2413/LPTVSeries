@@ -4,7 +4,7 @@
 //  © 2025 Luis Perez. All rights reserved.
 //
     
-struct RecentEpisodesRemoteDataSource: RecentEpisodesRemoteDataSourceProtocol {
+class RecentEpisodesRemoteDataSource: RecentEpisodesRemoteDataSourceProtocol {
     
     private var httpClient: HTTPClientProtocol
     
