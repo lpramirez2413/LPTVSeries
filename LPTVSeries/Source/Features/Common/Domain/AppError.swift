@@ -11,6 +11,20 @@ enum AppError: Error, Equatable {
     case notFound
     case serverError
     case unknown
+    
+    var message: String {
+        switch self {
+        case .networkUnavailable:
+            return "Please check your internet connection and try again."
+        case .notFound:
+            return "We couldn’t find what you’re looking for."
+        case .serverError:
+            return "Something went wrong. Please try again."
+        case .unknown:
+            return "An unexpected error occurred. Please try again."
+        }
+    }
+    
 }
 
 extension Error {

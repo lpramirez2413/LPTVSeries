@@ -14,7 +14,12 @@ class RecentEpisodesRemoteDataSource: RecentEpisodesRemoteDataSourceProtocol {
     
     func requestRecentEpisodesData(by country: String) async throws -> [EpisodeModel] {
         let query = GetRecentEpisodesRequest(country: country)
-        return try await httpClient.request(endpoint: Endpoint.getRecents, query: query)
+        do {
+            return try await httpClient.request(endpoint: Endpoint.getRecents, query: query)
+        } catch {
+            print("error: \(error)")
+            throw error
+        }
     }
     
 }
