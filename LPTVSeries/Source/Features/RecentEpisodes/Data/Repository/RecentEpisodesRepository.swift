@@ -28,7 +28,7 @@ class RecentEpisodesRepository: RecentEpisodesRepositoryProtocol {
     func fetchRecentEpisodes(for country: String) async throws -> [Episode] {
         let episodeModels = try await remote.requestRecentEpisodesData(by: country)
         let favoriteIds = try local.getFavoriteIds()
-        return EpisodeMapper.mapMovies(from: episodeModels, favoriteIDs: Set(favoriteIds))
+        return EpisodeMapper.mapEpisodes(from: episodeModels, favoriteIDs: Set(favoriteIds))
     }
     
 }
