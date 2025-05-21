@@ -36,6 +36,13 @@ class ShowsRepository: ShowsRepositoryProtocol {
         return try mapShows(showModels)
     }
     
+    func fetchShowDetails(id: Int) async throws -> Show {
+        let showModel = try await remote.requestShowDetails(id: id)
+        let favorites = try local.getFavorites()
+        let favoriteIDs = Set(favorites.map { Int($0.id) })
+        return ShowMapper.mapShow(from: showModel, favoriteIDs: favoriteIDs)
+    }
+    
     func setFavorite(_ show: Show) throws {
         if show.isFavorite {
             try local.addFavorite(show: .init(from: show))

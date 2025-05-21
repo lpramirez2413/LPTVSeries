@@ -43,9 +43,11 @@ struct RecentEpisodeRow: View {
             Button {
                 onFavoriteToggle(true)
             } label: {
-                Image(systemName: episode.isFavorite ? "star.fill" : "star")
-                    .foregroundColor(.red)
-                    .padding(Spacing.s)
+                if let isFavorite = episode.isFavorite {
+                    Image(systemName: isFavorite ? "star.fill" : "star")
+                        .foregroundColor(.red)
+                        .padding(Spacing.s)
+                }
             }
         }
     }
@@ -86,7 +88,9 @@ struct RecentEpisodeRow: View {
             id: 1,
             name: "Episode 1",
             posterUrl: "https://static.tvmaze.com/uploads/images/medium_portrait/359/898306.jpg",
-            isFavorite: false),
+            isFavorite: false,
+            number: 1,
+            season: 1),
         onFavoriteToggle: { _ in }
     )
     .frame(height: 100)

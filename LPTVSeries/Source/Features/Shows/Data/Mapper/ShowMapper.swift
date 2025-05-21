@@ -19,5 +19,31 @@ struct ShowMapper {
             )
         }
     }
+    
+    static func mapShow(from model: ShowModel, favoriteIDs: Set<Int>) -> Show {
+        var episodes: [Episode] = []
+        if let embededEpisodes = model._embedded?.episodes {
+            episodes = embededEpisodes.map { episodeModel in
+                Episode(
+                    id: episodeModel.id,
+                    name: episodeModel.name,
+                    posterUrl: episodeModel.image?.medium,
+                    isFavorite: nil,
+                    number: episodeModel.number,
+                    season: episodeModel.season
+                )
+            }
+        }
+        
+        return .init(
+            id: model.id,
+            name: model.name,
+            posterUrl: model.image?.medium,
+            summary: model.summary,
+            isFavorite: favoriteIDs.contains(model.id),
+            rating: model.rating.average,
+            episodes: episodes
+        )
+    }
 
 }

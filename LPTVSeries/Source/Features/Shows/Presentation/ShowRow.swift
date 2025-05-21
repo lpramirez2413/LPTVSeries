@@ -43,15 +43,6 @@ struct ShowRow: View {
         .clipped()
         .cornerRadius(8)
     }
-        
-    func successPhaseView(_ image: Image) -> some View {
-        image
-            .resizable()
-            .scaledToFill()
-            .frame(width: imageSize.width, height: imageSize.height)
-            .clipped()
-            .cornerRadius(Sizing.s)
-    }
     
     // MARK: Show Information
 

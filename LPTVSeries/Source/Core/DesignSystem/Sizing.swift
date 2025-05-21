@@ -23,4 +23,8 @@ struct Sizing {
     /// xx-large: 64 pts
     static var xxl: CGFloat = 64.0
     
+    /// custom scale using 8 pts as factor
+    static func scale(_ scale: Double) -> CGFloat {
+        s * scale
+    }
 }

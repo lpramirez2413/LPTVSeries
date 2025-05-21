@@ -32,6 +32,15 @@ class ShowsRemoteDataSource: ShowsRemoteDataSourceProtocol {
         }
     }
     
-
+    func requestShowDetails(id: Int) async throws -> ShowModel {
+        let query = GetShowDetailsRequest(embed: ["episodes"])
+        do {
+            return try await httpClient.request(endpoint: Endpoint.getShowDetails(showId: id), query: query)
+        } catch {
+            print("error: \(error)")
+            throw error
+        }
+    }
+    
     
 }
