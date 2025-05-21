@@ -7,5 +7,6 @@
 protocol ShowsRepositoryProtocol {
     func fetchShows(page: Int) async throws -> [Show]
     func searchShows(text: String) async throws -> [Show]
+    func fetchShowDetails(id: Int) async throws -> Show
     func setFavorite(_ show: Show) throws
 }

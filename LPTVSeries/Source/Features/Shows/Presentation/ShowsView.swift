@@ -33,18 +33,17 @@ struct ShowsView: View {
     var content: some View {
         List {
             ForEach(viewModel.shows, id: \.id) { show in
-                HStack {
-                    NavigationLink(value: show) {
-                        ShowRow(show: show,
-                                onFavoriteToggle: { isFavorite in
-                            print("Marked as favorite")
+                NavigationLink(value: show) {
+                    ShowRow(
+                        show: show,
+                        onFavoriteToggle: { isFavorite in
                             var updatedShow = show
                             updatedShow.isFavorite = isFavorite
                             viewModel.setFavorite(updatedShow)
-                        })
-                    }
-                    .buttonStyle(PlainButtonStyle())
+                        }
+                    )
                 }
+                .buttonStyle(PlainButtonStyle())
             }
             if viewModel.viewState == .loaded && !isSearchPresented {
                 HStack {
@@ -57,6 +56,9 @@ struct ShowsView: View {
                     Spacer()
                 }
             }
+        }
+        .navigationDestination(for: Show.self) { show in
+            ShowDetailsView(show: show)
         }
     }
     
