@@ -5,7 +5,7 @@
 //
 
 struct API: APIProtocol {
-    static var host: String = "https://api.tvmaze.com/"
+    static var host: String = "https://api.tvmaze.com"
     static var api: String = ""
 
     static var apiPath: String {
