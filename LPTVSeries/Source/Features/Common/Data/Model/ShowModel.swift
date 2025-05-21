@@ -8,5 +8,12 @@ import Foundation
 
 struct ShowModel: Decodable {
     let id: Int
-    let genres: [String]
+    let name: String
+    let image: ImageModel?
+    let summary: String?
+    let rating: RatingModel
+    
+    struct RatingModel: Decodable {
+        let average: Double?
+    }
 }

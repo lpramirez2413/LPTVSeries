@@ -9,26 +9,26 @@ import Foundation
 enum Endpoint: EndpointProtocol {
     
     case getRecents
+    case getShows
+    case searchShows
     
     var path: String {
         switch self {
         case .getRecents:
             "/schedule"
+        case .getShows:
+            "/shows"
+        case .searchShows:
+            "/search/shows"
         }
     }
     
     var httpMethod: HTTPMethod {
-        switch self {
-        case .getRecents:
-                .get
-        }
+        .get
     }
     
     var url: String {
-        switch self {
-        case .getRecents:
-            API.apiPath+path
-        }
+        API.apiPath+path
     }
     
 }
