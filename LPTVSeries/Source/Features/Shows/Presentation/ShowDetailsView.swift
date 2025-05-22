@@ -11,6 +11,7 @@ struct ShowDetailsView: View {
     
     // MARK: Private properties
     @StateObject private var viewModel: ShowDetailsViewModel
+    let summaryLineLimit: Int = 10
     
     // MARK: Constant properties
     private let imageSize: CGSize = .init(width: 140, height: 200)
@@ -23,39 +24,59 @@ struct ShowDetailsView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: Spacing.l) {
                 headerView
+                    .padding(.horizontal, Spacing.m)
                     .padding(.top, Spacing.m)
                 mediaContentView
             }
             .onAppear(perform: viewModel.getShowDetails)
             
         }
-        .padding(.horizontal, Spacing.m)
         .navigationTitle(viewModel.show.name)
         .navigationBarTitleDisplayMode(.inline)
     }
     
     var headerView: some View {
-        HStack(alignment: .top, spacing: Spacing.m) {
-            posterView
-            VStack(alignment: .leading, spacing: Spacing.s) {
-                if let summary = viewModel.show.summary {
-                    Text(summary)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+        VStack(alignment: .leading, spacing: Spacing.m) {
+            HStack(alignment: .top, spacing: Spacing.m) {
+                posterView
+                VStack {
+                    if let summary = viewModel.show.summary {
+                        Text(summary)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .lineLimit(summaryLineLimit)
+                    }
+                    if let premieredDate = viewModel.show.premiered {
+                        HStack {
+                            Text("\(premieredDate.toString(format: "yyyy"))")
+                                .font(.body)
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, Spacing.m/2)
+                                .padding(.vertical, Spacing.s/2)
+                                .background(Color.red.opacity(0.8))
+                                .clipShape(Capsule())
+                                .padding(.bottom, Spacing.s)
+                            Spacer()
+                        }
+                    }
                 }
             }
+            metaDataView
         }
+        
     }
     
     var posterView: some View {
-        AsyncImageView(
-            url: viewModel.show.posterUrl ?? "",
-            placeholder: .phShow
-        )
-        .scaledToFill()
-        .frame(width: imageSize.width, height: imageSize.height)
-        .clipped()
-        .cornerRadius(Sizing.s)
+        VStack {
+            AsyncImageView(
+                url: viewModel.show.posterUrl ?? "",
+                placeholder: .phShow
+            )
+            .scaledToFill()
+            .frame(width: imageSize.width, height: imageSize.height)
+            .clipped()
+            .cornerRadius(Sizing.s)
+        }
     }
     
     @ViewBuilder
@@ -63,6 +84,7 @@ struct ShowDetailsView: View {
         VStack(alignment: .leading) {
             Text("Watch")
                 .font(.title)
+                .padding(.horizontal, Spacing.m)
             Group {
                 switch viewModel.viewState {
                 case .loaded:
@@ -83,24 +105,44 @@ struct ShowDetailsView: View {
         }
     }
     
+    var metaDataView: some View {
+        VStack(alignment: .leading, spacing: Spacing.m) {
+            HStack(spacing: Spacing.s) {
+                ForEach(viewModel.show.genres, id: \.self) { item in
+                    Text(item)
+                        .font(.footnote)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, Spacing.m/2)
+                        .padding(.vertical, Spacing.s/2)
+                        .background(Color.gray.opacity(0.8))
+                        .cornerRadius(Sizing.s)
+                }
+            }
+            if let schedule = viewModel.show.schedule {
+                Text(schedule)
+            }
+        }
+    }
+    
     var seasonsView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(alignment: .center, spacing: Spacing.m) {
+            LazyHStack(alignment: .center, spacing: Spacing.s) {
                 ForEach(viewModel.seasons, id: \.number) { season in
                     Button {
-                        print("SELECT SEASON \(season.number)")
                         viewModel.selectedSeason = season
                     } label: {
                         Text("Season \(season.number)")
                             .font(.headline)
+                            .foregroundStyle(.white)
                             .padding(.horizontal, Spacing.m)
                             .padding(.vertical, Spacing.s)
-                            .background(Color.gray.opacity(0.2))
+                            .background(Color.red.opacity(0.8))
                             .clipShape(Capsule())
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
             }
+            .padding(.horizontal, Spacing.m)
         }
     }
     
@@ -117,6 +159,7 @@ struct ShowDetailsView: View {
                         }
                     }
                 }
+                .padding(.horizontal, Spacing.m)
             }
         }
     }
@@ -131,5 +174,10 @@ struct ShowDetailsView: View {
             posterUrl: "https://static.tvmaze.com/uploads/images/medium_portrait/359/898306.jpg",
             summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
             isFavorite: false,
-            rating: 5.6))
+            rating: 5.6,
+            premiered: Date(),
+            genres: ["Action", "Comedy"],
+            schedule: "Monday, Tuesday at 08:00 pm"
+        )
+    )
 }

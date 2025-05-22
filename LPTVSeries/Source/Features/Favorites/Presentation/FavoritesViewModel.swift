@@ -64,7 +64,10 @@ class FavoritesViewModel: ObservableObject {
             posterUrl: favoriteShow.posterUrl,
             summary: favoriteShow.summary,
             isFavorite: true,
-            rating: favoriteShow.rating
+            rating: favoriteShow.rating,
+            premiered: nil,
+            genres: [],
+            schedule: nil
         )
     }
     

@@ -29,7 +29,7 @@ struct MainView: View {
                 FavoritesView()
             }
             .tabItem {
-                Label("Favorites", systemImage: "star")
+                Label("Favorites", systemImage: "bookmark")
             }
 
             NavigationStack {

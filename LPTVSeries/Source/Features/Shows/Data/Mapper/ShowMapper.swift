@@ -15,7 +15,10 @@ struct ShowMapper {
                 posterUrl: $0.image?.medium,
                 summary: $0.summary,
                 isFavorite: favoriteIDs.contains($0.id),
-                rating: $0.rating.average
+                rating: $0.rating.average,
+                premiered: $0.premiered?.toDate(format: "yyyy-MM-dd"),
+                genres: $0.genres,
+                schedule: convertSchedule($0.schedule)
             )
         }
     }
@@ -30,7 +33,8 @@ struct ShowMapper {
                     posterUrl: episodeModel.image?.medium,
                     isFavorite: nil,
                     number: episodeModel.number,
-                    season: episodeModel.season
+                    season: episodeModel.season,
+                    summary: episodeModel.summary
                 )
             }
         }
@@ -42,8 +46,28 @@ struct ShowMapper {
             summary: model.summary,
             isFavorite: favoriteIDs.contains(model.id),
             rating: model.rating.average,
-            episodes: episodes
+            episodes: episodes,
+            premiered: model.premiered?.toDate(format: "yyyy-MM-dd"),
+            genres: model.genres,
+            schedule: convertSchedule(model.schedule)
         )
+    }
+    
+    // MARK: Helper functions
+    
+    private static func convertSchedule(_ schedule: ShowModel.Schedule?) -> String? {
+        guard let schedule else {
+            return nil
+        }
+        
+        let formattedTime = schedule.time?.toReadableTime() ?? ""
+        let formattedDays = schedule.days.formattedDayDescription()
+        
+        guard !formattedDays.isEmpty else {
+            return formattedTime.isEmpty ? "Schedule not available" : "At \(formattedTime)"
+        }
+        
+        return "\(formattedDays) at \(formattedTime)"
     }
 
 }

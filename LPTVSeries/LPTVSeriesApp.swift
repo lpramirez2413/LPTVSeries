@@ -13,6 +13,7 @@ struct LPTVSeriesApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                .tint(Color.red.opacity(0.8))
         }
     }
 }

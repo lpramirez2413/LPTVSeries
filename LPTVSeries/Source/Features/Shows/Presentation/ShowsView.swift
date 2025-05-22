@@ -8,6 +8,12 @@ import SwiftUI
 
 struct ShowsView: View {
     
+    // MARK: Private properties
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     @StateObject var viewModel: ShowsViewModel = .init()
     @State private var isSearchPresented = false
     
@@ -31,31 +37,34 @@ struct ShowsView: View {
     }
     
     var content: some View {
-        List {
-            ForEach(viewModel.shows, id: \.id) { show in
-                NavigationLink(value: show) {
-                    ShowRow(
-                        show: show,
-                        onFavoriteToggle: { isFavorite in
-                            var updatedShow = show
-                            updatedShow.isFavorite = isFavorite
-                            viewModel.setFavorite(updatedShow)
-                        }
-                    )
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(viewModel.shows, id: \.id) { show in
+                    NavigationLink(value: show) {
+                        ShowRow(
+                            show: show,
+                            onFavoriteToggle: { isFavorite in
+                                var updatedShow = show
+                                updatedShow.isFavorite = isFavorite
+                                viewModel.setFavorite(updatedShow)
+                            }
+                        )
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
-                .buttonStyle(PlainButtonStyle())
-            }
-            if viewModel.viewState == .loaded && !isSearchPresented {
-                HStack {
-                    Spacer()
-                    ProgressView("Loading...")
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .foregroundColor(.gray)
-                        .foregroundColor(.red)
-                        .onAppear(perform: viewModel.getShows)
-                    Spacer()
+                if viewModel.viewState == .loaded && !isSearchPresented {
+                    HStack {
+                        Spacer()
+                        ProgressView("Loading...")
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .foregroundColor(.gray)
+                            .foregroundColor(.red)
+                            .onAppear(perform: viewModel.getShows)
+                        Spacer()
+                    }
                 }
             }
+            .padding()
         }
         .navigationDestination(for: Show.self) { show in
             ShowDetailsView(show: show)

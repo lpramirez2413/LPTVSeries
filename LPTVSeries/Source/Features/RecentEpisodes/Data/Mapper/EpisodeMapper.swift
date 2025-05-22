@@ -20,7 +20,8 @@ struct EpisodeMapper {
                 posterUrl: $0.image?.medium,
                 isFavorite: isFavorite,
                 number: $0.number,
-                season: $0.season)
+                season: $0.season,
+                summary: $0.summary)
         }
     }
     
@@ -31,7 +32,8 @@ struct EpisodeMapper {
             posterUrl: model.image?.medium,
             isFavorite: nil,
             number: model.number,
-            season: model.season
+            season: model.season,
+            summary: model.summary
         )
     }
 }

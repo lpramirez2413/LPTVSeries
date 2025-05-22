@@ -13,6 +13,9 @@ struct ShowModel: Decodable {
     let summary: String?
     let rating: RatingModel
     let _embedded: EmbeddedModel?
+    let premiered: String?
+    let genres: [String]
+    let schedule: Schedule?
     
     struct RatingModel: Decodable {
         let average: Double?
@@ -20,5 +23,10 @@ struct ShowModel: Decodable {
     
     struct EmbeddedModel: Decodable {
         let episodes: [EpisodeModel]
+    }
+    
+    struct Schedule: Decodable {
+        let time: String?
+        let days: [String]
     }
 }
