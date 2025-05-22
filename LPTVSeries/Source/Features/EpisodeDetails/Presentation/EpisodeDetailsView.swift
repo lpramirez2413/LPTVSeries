@@ -21,7 +21,7 @@ struct EpisodeDetailsView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 headerView
-                VStack {
+                VStack(spacing: Spacing.l) {
                     Text(viewModel.episode.name)
                         .font(.largeTitle)
                     episodeInformationView
@@ -30,7 +30,7 @@ struct EpisodeDetailsView: View {
                 Spacer()
             }
         }
-        .navigationTitle("Episode \(viewModel.episode.number)")
+        .navigationTitle("S\(viewModel.episode.season): Ep. \(viewModel.episode.number)")
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -47,10 +47,11 @@ struct EpisodeDetailsView: View {
     
     var episodeInformationView: some View {
         VStack(alignment: .leading, spacing: Spacing.s) {
-            Text(viewModel.episode.name)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            
+            if let summary = viewModel.episode.summary {
+                Text(summary)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
         }
     }
     
@@ -63,5 +64,6 @@ struct EpisodeDetailsView: View {
             posterUrl: "https://static.tvmaze.com/uploads/images/medium_portrait/359/898306.jpg",
             isFavorite: nil,
             number: 1,
-            season: 1))
+            season: 1,
+            summary: "Summary"))
 }

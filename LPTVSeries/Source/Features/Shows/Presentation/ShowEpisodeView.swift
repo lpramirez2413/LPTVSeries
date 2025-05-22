@@ -46,6 +46,7 @@ struct ShowEpisodeView: View {
             posterUrl: "https://static.tvmaze.com/uploads/images/medium_portrait/359/898306.jpg",
             isFavorite: nil,
             number: 1,
-            season: 1)
+            season: 1,
+            summary: "Summary")
     )
 }

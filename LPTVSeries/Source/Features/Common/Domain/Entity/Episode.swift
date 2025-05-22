@@ -11,4 +11,5 @@ struct Episode: Equatable, Hashable {
     let isFavorite: Bool?
     let number: Int
     let season: Int
+    let summary: String?
 }

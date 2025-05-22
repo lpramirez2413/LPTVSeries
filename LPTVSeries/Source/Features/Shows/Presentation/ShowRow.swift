@@ -14,7 +14,7 @@ struct ShowRow: View {
     @State private var isFavorite: Bool
     
     // MARK: Constant properties
-    private let imageSize: CGSize = .init(width: 120, height: 160)
+    private let gridMiniumHeight: CGFloat = Sizing.scale(35)
     
     init(show: Show, onFavoriteToggle: @escaping (Bool) -> Void) {
         self.show = show
@@ -23,13 +23,15 @@ struct ShowRow: View {
     }
     
     var body: some View {
-        HStack(spacing: Spacing.s) {
+        ZStack {
             posterView
+            backgroundGradient
             showInformationView
-            Spacer()
             favoriteView
         }
-        .frame(height: imageSize.height)
+        .cornerRadius(8)
+        .clipped()
+        
     }
     
     // MARK: Poster
@@ -38,43 +40,68 @@ struct ShowRow: View {
             url: show.posterUrl ?? "",
             placeholder: .phShow
         )
-        .scaledToFill()
-        .frame(width: imageSize.width, height: imageSize.height)
-        .clipped()
-        .cornerRadius(8)
+    }
+    
+    var backgroundGradient: some View {
+        LinearGradient(
+            gradient: Gradient(colors: [
+                Color.black.opacity(0.1),
+                Color.black.opacity(0.7),
+                Color.black.opacity(0.9)]),
+            startPoint: .center,
+            endPoint: .bottom
+        )
+        .frame(maxWidth: .infinity, alignment: .bottom)
     }
     
     // MARK: Show Information
 
     var showInformationView: some View {
-        VStack(alignment: .leading, spacing: Spacing.s) {
-            Text(show.name)
-                .font(.subheadline)
-                .bold()
-                .lineLimit(3)
-            if let summary = show.summary {
-                Text(summary)
-                    .font(.caption)
-                    .lineLimit(5)
-            }
+        VStack {
             Spacer()
+            Text(show.name)
+                .foregroundStyle(.white)
+                .font(.callout)
+                .frame(maxWidth: .infinity)
+            if let rating = show.rating {
+                HStack {
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .frame(width: 12, height: 12)
+                        .foregroundStyle(.yellow)
+                    Text(String(format: "%.1f", rating))
+                        .foregroundStyle(.white)
+                        .font(.caption)
+                    Spacer()
+                }
+            }
         }
+        .padding(.bottom, Spacing.s)
+        .padding(.horizontal, Spacing.s)
     }
     
     // MARK: Favorite
     
     var favoriteView: some View {
         VStack {
-            Button {
-                isFavorite.toggle()
-                onFavoriteToggle(isFavorite)
-            } label: {
-                Image(systemName: isFavorite ? "star.fill" : "star")
-                    .foregroundColor(.yellow)
-                    .padding(.leading, Spacing.s)
-                    .padding(.bottom, Spacing.s)
+            HStack {
+                Spacer()
+                Button {
+                    isFavorite.toggle()
+                    onFavoriteToggle(isFavorite)
+                } label: {
+                    Image(systemName: isFavorite ? "bookmark.circle.fill" : "bookmark.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: Sizing.l, height: Sizing.l)
+                        .foregroundColor(isFavorite ? Color.red.opacity(0.8) : Color.white.opacity(0.8))
+                        .padding(.leading, Spacing.s)
+                        .padding(.bottom, Spacing.s)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.trailing, Spacing.s/2)
+                .padding(.top, Spacing.s/2)
             }
-            .buttonStyle(PlainButtonStyle())
             Spacer()
         }
     }
@@ -82,16 +109,32 @@ struct ShowRow: View {
 }
 
 #Preview {
-    ShowRow(
-        show: .init(
-            id: 1,
-            name: "Episode 1",
-            posterUrl: "https://static.tvmaze.com/uploads/images/medium_portrait/359/898306.jpg",
-            summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-            isFavorite: false,
-            rating: 2.0),
-        onFavoriteToggle: { _ in }
-    )
-    .frame(height: 160)
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
+    let items = Array(1...6)
+
+    return ScrollView {
+        LazyVGrid(columns: columns, spacing: 16) {
+            ForEach(items, id: \.self) { item in
+                ShowRow(
+                    show: .init(
+                        id: 1,
+                        name: "The morning show",
+                        posterUrl: "https://static.tvmaze.com/uploads/images/medium_portrait/359/898306.jpg",
+                        summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+                        isFavorite: false,
+                        rating: 7.3,
+                        premiered: Date(),
+                        genres: ["Action", "Comedy"],
+                        schedule: "Monday, Tuesday at 08:00 pm"),
+                    onFavoriteToggle: { _ in }
+                )
+            }
+        }
+        .padding()
+    }
 }
 

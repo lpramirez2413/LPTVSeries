@@ -20,9 +20,11 @@ struct AsyncImageView: View {
             if let data = loader.imageData, let uiImage = UIImage(data: data) {
                 Image(uiImage: uiImage)
                     .resizable()
+                    .scaledToFill()
             } else {
                 Image(placeholder)
                     .resizable()
+                    .scaledToFill()
             }
         }
     }
