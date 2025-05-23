@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "13861817-c395-4398-919c-91a8efdc3547",
+		"name": "TVSeries",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29393721"
+	},
+	"item": [
+		{
+			"name": "GetRecents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}schedule?country=US",
+					"host": [
+						"{{domain}}schedule"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "US"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetShows",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}shows?page=1",
+					"host": [
+						"{{domain}}shows"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchShows",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}search/shows?q=mandalorian",
+					"host": [
+						"{{domain}}search"
+					],
+					"path": [
+						"shows"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "mandalorian"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetShowDetails",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{domain}}shows/1"
+			},
+			"response": []
+		},
+		{
+			"name": "GetEpisodes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{domain}}episodes/20849"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPeople",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}people?embed=show",
+					"host": [
+						"{{domain}}people"
+					],
+					"query": [
+						{
+							"key": "embed",
+							"value": "show"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPersonDetails",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}people/1/castcredits?embed=show",
+					"host": [
+						"{{domain}}people"
+					],
+					"path": [
+						"1",
+						"castcredits"
+					],
+					"query": [
+						{
+							"key": "embed",
+							"value": "show"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchPeople",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}search/people?q=Pedro Pascar",
+					"host": [
+						"{{domain}}search"
+					],
+					"path": [
+						"people"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Pedro Pascar"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "https://api.tvmaze.com/",
+			"type": "string"
+		}
+	]
+}
