@@ -108,8 +108,8 @@ struct ShowDetailsView: View {
     var metaDataView: some View {
         VStack(alignment: .leading, spacing: Spacing.m) {
             HStack(spacing: Spacing.s) {
-                ForEach(viewModel.show.genres, id: \.self) { item in
-                    Text(item)
+                ForEach(viewModel.show.genres, id: \.self) { genre in
+                    Text(genre)
                         .font(.footnote)
                         .foregroundStyle(.white)
                         .padding(.horizontal, Spacing.m/2)

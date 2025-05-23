@@ -7,6 +7,21 @@
 import Foundation
 
 extension String {
+    
+    var flagEmoji: String? {
+        let base: UInt32 = 127397
+        var scalarResult = ""
+        
+        for char in unicodeScalars {
+            guard let flagScalar = UnicodeScalar(base + char.value) else {
+                return nil
+            }
+            scalarResult.unicodeScalars.append(flagScalar)
+        }
+        
+        return scalarResult
+    }
+    
     func toReadableTime() -> String {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "HH:mm"
@@ -22,13 +37,12 @@ extension String {
             return self
         }
     }
-}
 
-extension String {
     func toDate(format: String) -> Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter.date(from: self)
     }
+    
 }

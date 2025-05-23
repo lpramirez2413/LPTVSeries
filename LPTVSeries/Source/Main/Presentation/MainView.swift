@@ -32,21 +32,24 @@ struct MainView: View {
             .tabItem {
                 Label("Recent Episodes", systemImage: "clock")
             }
-
             NavigationStack {
                 ShowsView()
             }
             .tabItem {
                 Label("Shows", systemImage: "movieclapper")
             }
-
             NavigationStack {
                 FavoritesView()
             }
             .tabItem {
                 Label("Favorites", systemImage: "bookmark")
             }
-
+            NavigationStack {
+                PeopleView()
+            }
+            .tabItem {
+                Label("People", systemImage: "person.3")
+            }
             NavigationStack {
                 SettingsView()
             }

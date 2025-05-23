@@ -34,20 +34,18 @@ final class RecentEpisodesRemoteDataSourceTests: XCTestCase {
             "id": 1,
             "name": "Episode One",
             "image": null,
-            "show": {
-              "id": 101,
-              "genres": ["Comedy", "Action"]
-            },
+            "show": null,
+            "number": 1,
+            "season": 1,
             "summary": "First episode summary."
           },
           {
             "id": 2,
             "name": "Episode Two",
-            "image": "https://dummyimage.com/200x300",
-            "show": {
-              "id": 102,
-              "genres": ["Horror"]
-            },
+            "image": null,
+            "show": null,
+            "number": 2,
+            "season": 1,
             "summary": null
           }
         ]

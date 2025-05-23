@@ -30,17 +30,73 @@ final class RecentEpisodesRepositoryTests: XCTestCase {
 
     func test_fetchRecentEpisodes_withFavorites_shouldMarkFavoritesCorrectly() async throws {
         remoteDataSourceMock.episodeModels = [
-            .init(id: 101, name: "Episode 1", image: nil, show: .init(id: 1, genres: []), summary: nil),
-            .init(id: 102, name: "Episode 2", image: nil, show: .init(id: 1, genres: []), summary: nil),
-            .init(id: 103, name: "Episode 3", image: nil, show: .init(id: 1, genres: []), summary: nil)
+            
+            .init(
+                id: 101,
+                name: "Episode 1",
+                image: nil,
+                show: .init(
+                    id: 1,
+                    name: "Show 1",
+                    image: nil,
+                    summary: nil,
+                    rating: .init(average: 1.0),
+                    _embedded: nil,
+                    premiered: nil,
+                    genres: [],
+                    schedule: nil),
+                number: 1,
+                season: 1,
+                summary: nil),
+            .init(
+                id: 102,
+                name: "Episode 2",
+                image: nil,
+                show: .init(
+                    id: 1,
+                    name: "Show 1",
+                    image: nil,
+                    summary: nil,
+                    rating: .init(average: 1.0),
+                    _embedded: nil,
+                    premiered: nil,
+                    genres: [],
+                    schedule: nil),
+                number: 1,
+                season: 1,
+                summary: nil),
+            .init(
+                id: 103,
+                name: "Episode 3",
+                image: nil,
+                show: .init(
+                    id: 1,
+                    name: "Show 1",
+                    image: nil,
+                    summary: nil,
+                    rating: .init(average: 1.0),
+                    _embedded: nil,
+                    premiered: nil,
+                    genres: [],
+                    schedule: nil),
+                number: 1,
+                season: 1,
+                summary: nil)
         ]
         
         localDataSourceMock.favoriteIds = [101, 102]
         
         let episodes = try await sut.fetchRecentEpisodes(for: "foo")
         
+        let favoritedEpisodes = episodes.filter {
+            guard let favorite = $0.isFavorite else {
+                return false
+            }
+            return favorite
+        }
+        
         XCTAssertEqual(episodes.count, 3)
-        XCTAssertEqual(episodes.filter(\.isFavorite).count, 2)
+        XCTAssertEqual(favoritedEpisodes.count, 2)
     }
     
 }

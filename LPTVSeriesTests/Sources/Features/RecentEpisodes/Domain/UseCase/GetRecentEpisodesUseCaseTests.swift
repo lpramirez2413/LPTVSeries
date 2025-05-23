@@ -27,8 +27,8 @@ final class GetRecentEpisodesUseCaseTests: XCTestCase {
 
     func test_execute_whenSucceeds_returnEpisodes() async throws {
         repositoryMock.episodes = [
-            .init(id: 101, name: "Episode 1", posterUrl: nil, isFavorite: false),
-            .init(id: 102, name: "Episode 2", posterUrl: nil, isFavorite: false)
+            .init(id: 101, name: "Episode 1", posterUrl: nil, isFavorite: false, number: 1, season: 1, summary: nil),
+            .init(id: 102, name: "Episode 2", posterUrl: nil, isFavorite: false, number: 2, season: 1, summary: nil)
         ]
         let episodes = try await sut.execute(by: "US")
         
