@@ -10,13 +10,13 @@ struct ShowRow: View {
     
     // MARK: Private properties
     private var show: Show
-    private var onFavoriteToggle: (Bool) -> Void
+    private var onFavoriteToggle: ((Bool) -> Void)?
     @State private var isFavorite: Bool
     
     // MARK: Constant properties
     private let gridMiniumHeight: CGFloat = Sizing.scale(35)
     
-    init(show: Show, onFavoriteToggle: @escaping (Bool) -> Void) {
+    init(show: Show, onFavoriteToggle: ((Bool) -> Void)?) {
         self.show = show
         self.onFavoriteToggle = onFavoriteToggle
         self._isFavorite = State(initialValue: show.isFavorite)
@@ -27,7 +27,9 @@ struct ShowRow: View {
             posterView
             backgroundGradient
             showInformationView
-            favoriteView
+            if let onFavoriteToggle {
+                favoriteView
+            }
         }
         .cornerRadius(8)
         .clipped()
@@ -88,7 +90,7 @@ struct ShowRow: View {
                 Spacer()
                 Button {
                     isFavorite.toggle()
-                    onFavoriteToggle(isFavorite)
+                    onFavoriteToggle?(isFavorite)
                 } label: {
                     Image(systemName: isFavorite ? "bookmark.circle.fill" : "bookmark.circle")
                         .resizable()

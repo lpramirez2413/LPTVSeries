@@ -13,6 +13,9 @@ enum Endpoint: EndpointProtocol {
     case searchShows
     case getShowDetails(showId: Int)
     case getEpisodeDetails(episodeId: Int)
+    case getPeople
+    case searchPeople
+    case getPersonShows(personId: Int)
     
     var path: String {
         switch self {
@@ -26,6 +29,12 @@ enum Endpoint: EndpointProtocol {
             "/shows/\(showId)"
         case .getEpisodeDetails(let episodeId):
             "/episodes/\(episodeId)"
+        case .getPeople:
+            "/people"
+        case .getPersonShows(let personId):
+            "/people/\(personId)/castcredits"
+        case .searchPeople:
+            "/search/people"
         }
     }
     
