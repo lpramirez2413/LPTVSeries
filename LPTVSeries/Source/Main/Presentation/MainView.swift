@@ -9,7 +9,22 @@ import SwiftUI
 
 struct MainView: View {
     
+    @StateObject var viewModel: MainViewModel = MainViewModel()
+    
     var body: some View {
+        if viewModel.isBlockedByBiometrics {
+            if viewModel.hasPassedBiometrics {
+                mainContent
+            } else {
+                blockedContent
+                    .onAppear(perform: viewModel.requestAccessWithBiometrics)
+            }
+        } else {
+            mainContent
+        }
+    }
+    
+    var mainContent: some View {
         TabView {
             NavigationStack {
                 RecentEpisodesView()
@@ -33,12 +48,16 @@ struct MainView: View {
             }
 
             NavigationStack {
-                Text("Settings")
+                SettingsView()
             }
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
         }
+    }
+    
+    var blockedContent: some View {
+        Text("Blocked Content")
     }
 }
 
